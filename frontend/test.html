@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Majd GUI Test Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="majd-gui.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-controls {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-controls h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        .control-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        select, button {
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        button {
+            background-color: #FF3333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #FF5555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Majd GUI Test Page</h1>
+        
+        <div class="test-controls">
+            <h2>Test Controls</h2>
+            <div class="control-group">
+                <label for="test-platform">Test Platform:</label>
+                <select id="test-platform">
+                    <option value="auto">Auto (Recommended)</option>
+                    <option value="chatgpt">ChatGPT</option>
+                    <option value="perplexity">Perplexity</option>
+                    <option value="gemini">Gemini</option>
+                    <option value="copilot">GitHub Copilot</option>
+                    <option value="deepseek">DeepSeek</option>
+                    <option value="grok3">Grok3</option>
+                    <option value="vertix">Vertix</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <button id="apply-platform">Apply Platform</button>
+                <button id="toggle-streaming">Toggle Streaming</button>
+                <button id="toggle-reasoning">Toggle Reasoning</button>
+                <button id="toggle-fullscreen">Toggle Fullscreen</button>
+            </div>
+        </div>
+        
+        <div class="majd-container" id="majd-container">
+            <div class="majd-header">
+                <div class="majd-logo">
+                    <img src="https://via.placeholder.com/32x32" alt="Majd AI Logo" id="majd-logo-img">
+                    <div class="majd-logo-text">MAJD</div>
+                </div>
+                <div class="majd-controls">
+                    <button class="majd-control-button" id="majd-clear-btn" title="Clear conversation">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                    <button class="majd-control-button" id="majd-toggle-reasoning-btn" title="Toggle reasoning">
+                        <i class="fas fa-brain"></i>
+                    </button>
+                    <button class="majd-control-button" id="majd-settings-btn" title="Settings">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="majd-chat-area" id="majd-chat-area">
+                <!-- Messages will be dynamically inserted here -->
+                <div class="majd-message majd-ai-message">
+                    <div class="majd-message-content">
+                        Hello! I'm Majd, your advanced AI assistant. How can I help you today?
+                    </div>
+                </div>
+            </div>
+            
+            <div class="majd-input-area">
+                <div class="majd-options">
+                    <button class="majd-option-button" id="majd-voice-btn" title="Voice input">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                </div>
+                <input type="text" class="majd-input" id="majd-input" placeholder="Type your message here...">
+                <button class="majd-send-button" id="majd-send-btn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Templates for dynamic content -->
+    <template id="majd-user-message-template">
+        <div class="majd-message majd-user-message">
+            <div class="majd-message-content"></div>
+        </div>
+    </template>
+
+    <template id="majd-ai-message-template">
+        <div class="majd-message majd-ai-message">
+            <div class="majd-message-content"></div>
+            <div class="majd-platform-indicator"></div>
+            <div class="majd-reasoning" style="display: none;">
+                <div class="majd-reasoning-title">Reasoning Process:</div>
+                <div class="majd-reasoning-content"></div>
+            </div>
+        </div>
+    </template>
+
+    <template id="majd-thinking-template">
+        <div class="majd-message majd-thinking">
+            <div class="majd-thinking-dots">
+                <div class="majd-thinking-dot"></div>
+                <div class="majd-thinking-dot"></div>
+                <div class="majd-thinking-dot"></div>
+            </div>
+        </div>
+    </template>
+
+    <script src="majd-gui.js"></script>
+    <script>
+        // Initialize Majd GUI with mock API for testing
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mock API responses
+            const mockResponses = {
+                chatgpt: "This is a simulated response from ChatGPT. I'm designed to be helpful, harmless, and honest in my interactions.",
+                perplexity: "This is a simulated response from Perplexity. I excel at research and information synthesis, providing comprehensive answers with citations.",
+                gemini: "This is a simulated response from Gemini. I have strong multimodal capabilities and can reason across text and visual information.",
+                copilot: "This is a simulated response from GitHub Copilot. I specialize in code generation and software development assistance.",
+                deepseek: "This is a simulated response from DeepSeek. I'm particularly good at mathematical reasoning and step-by-step problem solving.",
+                grok3: "This is a simulated response from Grok3. I provide real-time data analysis and insights with a touch of humor.",
+                vertix: "This is a simulated response from Vertix. I offer specialized domain expertise across various professional fields."
+            };
+
+            const mockReasoning = "Step 1: Analyze the user's query to determine intent.\nStep 2: Identify the key information needed to provide a comprehensive response.\nStep 3: Retrieve relevant knowledge and organize it in a logical structure.\nStep 4: Generate a clear and concise response that addresses all aspects of the query.\nStep 5: Review the response for accuracy, completeness, and helpfulness.";
+
+            // Override fetch for testing
+            const originalFetch = window.fetch;
+            window.fetch = function(url, options) {
+                if (url.includes('/api/chat')) {
+                    return new Promise((resolve) => {
+                        setTimeout(() => {
+                            const requestData = JSON.parse(options.body);
+                            const platform = requestData.options.overridePlatform || 'chatgpt';
+                            
+                            resolve({
+                                ok: true,
+                                json: () => Promise.resolve({
+                                    formattedResponse: mockResponses[platform] || mockResponses.chatgpt,
+                                    routingInfo: { platform: platform },
+                                    thinkingProcess: mockReasoning
+                                })
+                            });
+                        }, 1500); // Simulate network delay
+                    });
+                }
+                return originalFetch(url, options);
+            };
+
+            // Initialize GUI
+            window.majdGUI = new MajdGUI({
+                apiEndpoint: '/api/chat',
+                streamingEndpoint: '/api/chat/stream',
+                showReasoning: false,
+                defaultPlatform: 'auto',
+                enableStreaming: true,
+                enableVoiceInput: true
+            });
+
+            // Test controls
+            document.getElementById('apply-platform').addEventListener('click', () => {
+                const platform = document.getElementById('test-platform').value;
+                window.majdGUI.config.defaultPlatform = platform;
+                alert(`Platform set to: ${platform}`);
+            });
+
+            document.getElementById('toggle-streaming').addEventListener('click', () => {
+                window.majdGUI.config.enableStreaming = !window.majdGUI.config.enableStreaming;
+                alert(`Streaming: ${window.majdGUI.config.enableStreaming ? 'Enabled' : 'Disabled'}`);
+            });
+
+            document.getElementById('toggle-reasoning').addEventListener('click', () => {
+                window.majdGUI.toggleReasoning();
+                alert(`Reasoning: ${window.majdGUI.config.showReasoning ? 'Visible' : 'Hidden'}`);
+            });
+
+            document.getElementById('toggle-fullscreen').addEventListener('click', () => {
+                const isFullscreen = document.getElementById('majd-container').classList.contains('majd-fullscreen');
+                window.majdGUI.toggleFullscreen(!isFullscreen);
+            });
+        });
+    </script>
+</body>
+</html>

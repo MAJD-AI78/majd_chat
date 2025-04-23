@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Majd AI Interface</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="majd-gui.css">
+</head>
+<body>
+    <div class="majd-container" id="majd-container">
+        <div class="majd-header">
+            <div class="majd-logo">
+                <img src="majd-logo.png" alt="Majd AI Logo" id="majd-logo-img">
+                <div class="majd-logo-text">MAJD</div>
+            </div>
+            <div class="majd-controls">
+                <button class="majd-control-button" id="majd-clear-btn" title="Clear conversation">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+                <button class="majd-control-button" id="majd-toggle-reasoning-btn" title="Toggle reasoning">
+                    <i class="fas fa-brain"></i>
+                </button>
+                <button class="majd-control-button" id="majd-settings-btn" title="Settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="majd-chat-area" id="majd-chat-area">
+            <!-- Messages will be dynamically inserted here -->
+            <div class="majd-message majd-ai-message">
+                <div class="majd-message-content">
+                    Hello! I'm Majd, your advanced AI assistant. How can I help you today?
+                </div>
+            </div>
+        </div>
+        
+        <div class="majd-input-area">
+            <div class="majd-options">
+                <button class="majd-option-button" id="majd-voice-btn" title="Voice input">
+                    <i class="fas fa-microphone"></i>
+                </button>
+            </div>
+            <input type="text" class="majd-input" id="majd-input" placeholder="Type your message here...">
+            <button class="majd-send-button" id="majd-send-btn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Templates for dynamic content -->
+    <template id="majd-user-message-template">
+        <div class="majd-message majd-user-message">
+            <div class="majd-message-content"></div>
+        </div>
+    </template>
+
+    <template id="majd-ai-message-template">
+        <div class="majd-message majd-ai-message">
+            <div class="majd-message-content"></div>
+            <div class="majd-platform-indicator"></div>
+            <div class="majd-reasoning" style="display: none;">
+                <div class="majd-reasoning-title">Reasoning Process:</div>
+                <div class="majd-reasoning-content"></div>
+            </div>
+        </div>
+    </template>
+
+    <template id="majd-thinking-template">
+        <div class="majd-message majd-thinking">
+            <div class="majd-thinking-dots">
+                <div class="majd-thinking-dot"></div>
+                <div class="majd-thinking-dot"></div>
+                <div class="majd-thinking-dot"></div>
+            </div>
+        </div>
+    </template>
+
+    <script src="majd-gui.js"></script>
+</body>
+</html>
