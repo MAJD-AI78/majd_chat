@@ -6,9 +6,11 @@
     { "src": "*.js", "use": "@vercel/static" },
     { "src": "assets/**", "use": "@vercel/static" }
   ],
-  "routes": [
-    { "src": "/api/:path*", "dest": "https://api.majd.chat/api/:path*" },
-    { "src": "/(.*)", "dest": "/$1" }
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://api.majd.chat/api/:path*"
+    }
   ],
   "headers": [
     {
