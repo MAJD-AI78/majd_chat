@@ -1,6 +1,6 @@
 {
   "name": "majd-frontend",
-  "version": 1,
+  "version": 2,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
